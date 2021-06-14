@@ -63,10 +63,11 @@ public class Main {
 	
 	public static void main(String[] args) throws Exception {
 		
-		getPlugins();
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					getPlugins();
 					Main window = new Main();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
@@ -129,8 +130,6 @@ public class Main {
 			
 	        d1.preparar();
 			
-	
-		//	System.out.println(lista.toString());
 		}
 		
 	}
