@@ -63,7 +63,6 @@ public class Main {
 	
 	public static void main(String[] args) throws Exception {
 		
-		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -79,7 +78,7 @@ public class Main {
 	}
 
 	public static List getPlugins() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
-		List lista = new ArrayList<>();
+		List listaDePlugins = new ArrayList<>();
 		
 		File currentDir = new File("./plugins");
 	     String []plugins = currentDir.list();
@@ -87,12 +86,12 @@ public class Main {
 	     
 	      URL[] jars = new URL[plugins.length];
 	      for (int i = 0; i < plugins.length; i++){
-	    	  lista.add(plugins[i].split("\\.")[0]);
+	    	  listaDePlugins.add(plugins[i].split("\\.")[0]);
 	    	  jars[i] = (new File("./plugins/" + plugins[i])).toURL();
 	      }
 	      URLClassLoader ulc = new URLClassLoader(jars);
 	      
-	      return lista;
+	      return listaDePlugins;
 	}
 	
 	public static List getList() {
@@ -111,13 +110,12 @@ public class Main {
 		List lista = getList();
 		PizzaSimples pizza = new PizzaSimples();
 		List<PizzaDecorator> listDecorator = new ArrayList<PizzaDecorator>();
-		PizzaDecorator  decorator = null;
 		if(!lista.isEmpty()) {
-			Class<?> cl = Class.forName((String) lista.get(0));
-			decorator = (PizzaDecorator) cl.newInstance();
+			Class<?> cl = null;
 			int i = 0;
 			for(i= 0;i<lista.size();i++) {
 				 cl = Class.forName((String) lista.get(i));
+				 System.out.println(cl);
 				 listDecorator.add((PizzaDecorator) cl.newInstance());
 			}
 			for(i=0;i<listDecorator.size()-1;i++) {
