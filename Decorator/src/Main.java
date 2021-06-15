@@ -53,14 +53,12 @@ import javax.swing.AbstractButton;
 import javax.swing.AbstractListModel;
 import java.awt.Font;
 
-
 public class Main {
-
 	private JFrame frame;
 	private JTable table;
 	private JTable table_1;
 	private static DefaultListModel listModel = new DefaultListModel<>();
-	
+
 	public static void main(String[] args) throws Exception {
 		
 		EventQueue.invokeLater(new Runnable() {
@@ -79,7 +77,6 @@ public class Main {
 
 	public static List getPluginsToListSabores() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		List listaDePlugins = new ArrayList<>();
-		
 		File currentDir = new File("./plugins");
 	     String []plugins = currentDir.list();
 	      
@@ -93,7 +90,6 @@ public class Main {
 
 		File currentDir = new File("./plugins");
 	     String []plugins = currentDir.list();
-	  
 	      URL[] jars = new URL[plugins.length];
 	      
 	      for (int i = 0; i < plugins.length; i++){
@@ -127,13 +123,10 @@ public class Main {
 	}
 	/* Método preparar incompleto */
 	public static void preparar() throws Exception {
-		List lista = getListEscolhidos();
 		PizzaSimples pizza = new PizzaSimples();
-		List<PizzaDecorator> listDecorator = new ArrayList<PizzaDecorator>();
+		List<PizzaDecorator> listDecorator = getInstances();
 	    
-		listDecorator = getInstances();
-	      
-		if(!lista.isEmpty()) {
+		if(!getListEscolhidos().isEmpty()) {
 			int i = 0;
 		
 			for(i=0;i<listDecorator.size()-1;i++) {
@@ -148,7 +141,6 @@ public class Main {
 		initialize();
 	}
 
-
 	private void initialize() throws Exception {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 580, 402);
@@ -162,7 +154,6 @@ public class Main {
 		frame.getContentPane().add(labelDecorator);
 		
 		DefaultListModel listModel = new DefaultListModel();
-
 		listModel.addAll(getPluginsToListSabores());
 		
 		JList list = new JList(listModel);
@@ -182,19 +173,12 @@ public class Main {
 		JToggleButton buttonInserir = new JToggleButton(">");
 		buttonInserir.setBounds(247, 138, 46, 23);
 		frame.getContentPane().add(buttonInserir);
-		
-		
-		buttonInserir.addActionListener(
-				
-				
-				new ActionListener() {
 
-					@Override
+		buttonInserir.addActionListener(
+
+				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-					//System.out.println(list.getSelectedValue());
 					lista.addElement(list.getSelectedValue() );
-				//	System.out.println(lista.toString());
-	
 					list_1.setModel(lista);
 					Main.listModel = lista;
 					list_1.setSelectedIndex(lista.getSize()-1);
@@ -204,13 +188,10 @@ public class Main {
 		buttonRetirar.setBounds(247, 172, 46, 23);
 		frame.getContentPane().add(buttonRetirar);
 		
-		buttonRetirar.addActionListener(
-								
+		buttonRetirar.addActionListener(			
 				new ActionListener() {
 					int index = list_1.getSelectedIndex();
-
 				public void actionPerformed(ActionEvent e) {
-					
 					if (lista.getSize() == 0) {
 						JOptionPane.getDesktopPaneForComponent(buttonRetirar);
 						JOptionPane.showMessageDialog(frame, "Vazio");
@@ -237,19 +218,14 @@ public class Main {
 		JToggleButton tglbtnUp = new JToggleButton("Up");
 		tglbtnUp.setBounds(465, 116, 76, 23);
 		frame.getContentPane().add(tglbtnUp);
-		
 		tglbtnUp.addActionListener(new ActionListener() {
-			
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				String itemAnterior= "";
 				String selected = "";
 				int index;
 				if(list_1.getSelectedIndex() != 0) {
-					
 					itemAnterior = (String) lista.getElementAt(list_1.getSelectedIndex() -1);
 					 selected = (String) lista.getElementAt(list_1.getSelectedIndex());
-					 
 					 index = list_1.getSelectedIndex();
 					 lista.setElementAt(list_1.getSelectedValue(), list_1.getSelectedIndex() -1);
 					 lista.setElementAt(itemAnterior, list_1.getSelectedIndex());
@@ -257,20 +233,17 @@ public class Main {
 					}
 			}
 		});
-		
 		JToggleButton tglbtnDown = new JToggleButton("Down");
 		tglbtnDown.setBounds(465, 150, 76, 23);
 		frame.getContentPane().add(tglbtnDown);
 		tglbtnDown.addActionListener(new ActionListener() {
-			
-			@Override
+		
 			public void actionPerformed(ActionEvent e) {
 				String itemPosterior= "";
 				String selected = "";
 				int index;
 				
 				if(list_1.getSelectedIndex() < list_1.getLastVisibleIndex()) {
-					
 					itemPosterior = (String) lista.getElementAt(list_1.getSelectedIndex() +1);
 					 selected = (String) lista.getElementAt(list_1.getSelectedIndex());
 					 index = list_1.getSelectedIndex();
@@ -291,7 +264,6 @@ public class Main {
 		frame.getContentPane().add(labelEscolhidos);
 		
 		buttonPreparar.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -300,7 +272,6 @@ public class Main {
 					}
 					preparar();
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}		
 			}
