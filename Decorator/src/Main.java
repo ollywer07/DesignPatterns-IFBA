@@ -66,7 +66,7 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					getPlugins();
+			
 					Main window = new Main();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
@@ -77,24 +77,32 @@ public class Main {
 		
 	}
 
-	public static List getPlugins() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+	public static List getPluginsToListSabores() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		List listaDePlugins = new ArrayList<>();
 		
 		File currentDir = new File("./plugins");
 	     String []plugins = currentDir.list();
-	    
-	     
-	      URL[] jars = new URL[plugins.length];
+	      
 	      for (int i = 0; i < plugins.length; i++){
 	    	  listaDePlugins.add(plugins[i].split("\\.")[0]);
-	    	  jars[i] = (new File("./plugins/" + plugins[i])).toURL();
 	      }
-	      URLClassLoader ulc = new URLClassLoader(jars);
-	      
 	      return listaDePlugins;
 	}
 	
-	public static List getList() {
+	public static  URL[] getListURL() throws MalformedURLException {
+
+		File currentDir = new File("./plugins");
+	     String []plugins = currentDir.list();
+	  
+	      URL[] jars = new URL[plugins.length];
+	      
+	      for (int i = 0; i < plugins.length; i++){
+	    	  jars[i] = (new File("./plugins/" + plugins[i])).toURL(); 
+	      }
+		return jars;
+	}
+	
+	public static List getListEscolhidos() {
 		List<String> lista = new ArrayList<String>();
 		if(!listModel.isEmpty()) {
 			for(int i = 0; i< listModel.size(); i++) {
@@ -105,28 +113,35 @@ public class Main {
 		return null;
 	}	
 	
+	public static List<PizzaDecorator> getInstances() throws Exception {
+		List<PizzaDecorator> listDecorator = new ArrayList<PizzaDecorator>();
+		List lista = getListEscolhidos();
+		URL[] jars = getListURL();
+		URLClassLoader ulc = new URLClassLoader(jars);
+		 for(int i=0;i<lista.size();i++) {
+	    	  String factoryName = ((String) lista.get(i)).split("\\.")[0];
+	    		PizzaDecorator factory = (PizzaDecorator) Class.forName(factoryName, true, ulc).newInstance();
+	    		listDecorator.add(factory); 
+	      }
+		 return listDecorator;
+	}
 	/* Método preparar incompleto */
 	public static void preparar() throws Exception {
-		List lista = getList();
+		List lista = getListEscolhidos();
 		PizzaSimples pizza = new PizzaSimples();
 		List<PizzaDecorator> listDecorator = new ArrayList<PizzaDecorator>();
+	    
+		listDecorator = getInstances();
+	      
 		if(!lista.isEmpty()) {
-			Class<?> cl = null;
 			int i = 0;
-			for(i= 0;i<lista.size();i++) {
-				 cl = Class.forName((String) lista.get(i));
-				 System.out.println(cl);
-				 listDecorator.add((PizzaDecorator) cl.newInstance());
-			}
+		
 			for(i=0;i<listDecorator.size()-1;i++) {
 				listDecorator.get(i).setDecorated(listDecorator.get(i+1));
 			}
-			
 			listDecorator.get(listDecorator.size()-1).setDecorated(pizza);
 			listDecorator.get(0).preparar();
-			
 		}
-		
 	}
 
 	public Main() throws Exception {
@@ -148,7 +163,7 @@ public class Main {
 		
 		DefaultListModel listModel = new DefaultListModel();
 
-		listModel.addAll(getPlugins());
+		listModel.addAll(getPluginsToListSabores());
 		
 		JList list = new JList(listModel);
 		
@@ -176,9 +191,9 @@ public class Main {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-					System.out.println(list.getSelectedValue());
+					//System.out.println(list.getSelectedValue());
 					lista.addElement(list.getSelectedValue() );
-					System.out.println(lista.toString());
+				//	System.out.println(lista.toString());
 	
 					list_1.setModel(lista);
 					Main.listModel = lista;
