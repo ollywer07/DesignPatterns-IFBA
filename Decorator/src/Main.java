@@ -170,7 +170,7 @@ public class Main {
 	
 		DefaultListModel lista = new DefaultListModel();
 		
-		JToggleButton buttonInserir = new JToggleButton(">");
+		JButton buttonInserir = new JButton(">");
 		buttonInserir.setBounds(247, 138, 46, 23);
 		frame.getContentPane().add(buttonInserir);
 
@@ -184,7 +184,7 @@ public class Main {
 					list_1.setSelectedIndex(lista.getSize()-1);
 				}
 		});
-		JToggleButton buttonRetirar = new JToggleButton("<");
+		JButton buttonRetirar = new JButton("<");
 		buttonRetirar.setBounds(247, 172, 46, 23);
 		frame.getContentPane().add(buttonRetirar);
 		
@@ -215,10 +215,10 @@ public class Main {
 		labelSabores.setBounds(71, 75, 184, 14);
 		frame.getContentPane().add(labelSabores);
 		
-		JToggleButton tglbtnUp = new JToggleButton("Up");
-		tglbtnUp.setBounds(465, 116, 76, 23);
-		frame.getContentPane().add(tglbtnUp);
-		tglbtnUp.addActionListener(new ActionListener() {
+		JButton buttonUp = new JButton("Up");
+		buttonUp.setBounds(465, 116, 76, 23);
+		frame.getContentPane().add(buttonUp);
+		buttonUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String itemAnterior= "";
 				String selected = "";
@@ -233,10 +233,10 @@ public class Main {
 					}
 			}
 		});
-		JToggleButton tglbtnDown = new JToggleButton("Down");
-		tglbtnDown.setBounds(465, 150, 76, 23);
-		frame.getContentPane().add(tglbtnDown);
-		tglbtnDown.addActionListener(new ActionListener() {
+		JButton buttonDown = new JButton("Down");
+		buttonDown.setBounds(465, 150, 76, 23);
+		frame.getContentPane().add(buttonDown);
+		buttonDown.addActionListener(new ActionListener() {
 		
 			public void actionPerformed(ActionEvent e) {
 				String itemPosterior= "";
