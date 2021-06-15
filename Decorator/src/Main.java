@@ -28,6 +28,9 @@ import javax.swing.DefaultListModel;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.ScrollPane;
+import java.awt.Scrollbar;
+
 import javax.swing.JTextField;
 import javax.swing.JFormattedTextField;
 import javax.swing.JSeparator;
@@ -55,8 +58,6 @@ import java.awt.Font;
 
 public class Main {
 	private JFrame frame;
-	private JTable table;
-	private JTable table_1;
 	private static DefaultListModel listModel = new DefaultListModel<>();
 
 	public static void main(String[] args) throws Exception {
@@ -64,7 +65,7 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-			
+					
 					Main window = new Main();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
@@ -159,14 +160,20 @@ public class Main {
 		JList list = new JList(listModel);
 		
 		list.setBounds(102, 100, 135, 143);
-		
 		frame.getContentPane().add(list);
+		JScrollPane lst2ContScrollPane = new JScrollPane(list);
+		lst2ContScrollPane.setBounds(102, 100, 135, 143);
+		frame.getContentPane().add(lst2ContScrollPane);
 		
 		list.setSelectedIndex(0);
 		
 		JList list_1 = new JList();
 		list_1.setBounds(303, 100, 135, 143);
 		frame.getContentPane().add(list_1);
+		ScrollPane sc = new ScrollPane();
+		JScrollPane lstContScrollPane = new JScrollPane(list_1);
+					lstContScrollPane.setBounds(303, 100, 135, 143);
+					frame.getContentPane().add(lstContScrollPane);
 	
 		DefaultListModel lista = new DefaultListModel();
 		
