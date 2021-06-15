@@ -118,17 +118,14 @@ public class Main {
 			int i = 0;
 			for(i= 0;i<lista.size();i++) {
 				 cl = Class.forName((String) lista.get(i));
-				decorator.setDecorated((PizzaDecorator) cl.newInstance());
-
+				 listDecorator.add((PizzaDecorator) cl.newInstance());
 			}
-
-			PizzaDecorator d1  = new AzeitonaDecorator();
-			PizzaDecorator d2 = new PepperoniDecorator();
-			d1.setDecorated(d2);
-			d2.setDecorated(pizza);
+			for(i=0;i<listDecorator.size()-1;i++) {
+				listDecorator.get(i).setDecorated(listDecorator.get(i+1));
+			}
 			
-			
-	        d1.preparar();
+			listDecorator.get(listDecorator.size()-1).setDecorated(pizza);
+			listDecorator.get(0).preparar();
 			
 		}
 		
